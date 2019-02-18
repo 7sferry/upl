@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--~~~~~~~~~~~~~~~~~~~~~
+  ~ Created by MR Ferry™~
+  ~  February 2019      ~
+  ~~~~~~~~~~~~~~~~~~~~~-->
+
+<!--
+
+changelog:
+1.0
+first project
+1.1
+change design
+add drag and drop
+fix bug in chrome
+fix status bugs
+1.2
+disabled upload button when upload in progress
+
+-->
+
+<head>
+
+  <link href="css.css" rel="stylesheet"/>
+</head>
+<div class="uploadOuter">
+<form id="upload_form" enctype="multipart/form-data" method="post">
+  <span class="dragBox" >
+  <input type="file" name="file1" id="file1" onchange="uploadFile()" multiple>
+  Click or Drag and Drop File(s) here
+  </span><div style="margin: 2% 0">
+  <div class="close big" onclick="abort(event)"></div></div>
+  <progress id="progressBar" value="0" max="100" style="width:75%; margin-top: 10px"></progress>
+  <h3 id="status"></h3>
+  <p id="loaded_n_total"></p>
+</form>
+</div>
+
+
+<script src="js.js"></script>

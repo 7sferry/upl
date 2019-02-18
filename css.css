@@ -1,0 +1,80 @@
+/************************
+ * Created by MR Ferry™ *
+ *  February 2019       *
+ ************************/
+
+
+
+.close {
+    margin: 5px 0;
+    position: relative;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    /*overflow: hidden;*/
+}
+.close:hover::before, .close:hover::after {
+    background: #1ebcc5;
+}
+.close:hover{
+    cursor: pointer;
+}
+.close::before, .close::after {
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    /*top: 50%;*/
+    left: 0;
+    margin-top: 5px;
+    background: #000;
+}
+.close::before {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.close::after {
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+.close.big {
+    -webkit-transform: scale(3);
+    -moz-transform: scale(3);
+    -ms-transform: scale(3);
+    -o-transform: scale(3);
+    transform: scale(3);
+}
+.uploadOuter {
+    text-align: center;
+    padding: 20px;
+}
+.uploadOuter strong {
+    padding: 0 10px;
+}
+.dragBox {
+    width: 75%;
+    height: 300px;
+    margin: 0 auto;
+    position: relative;
+    text-align: center;
+    font-weight: bold;
+    line-height: 95px;
+    color: #999;
+    border: 2px dashed #ccc;
+    display: inline-block;
+    transition: transform 0.3s;
+}
+.dragBox input[type="file"] {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    top: 0;
+    left: 0;
+}
