@@ -7,7 +7,7 @@
 
 <%
    File file ;
-   int maxFileSize =  5000000 * 1024 * 1024;
+   int maxFileSize = 5000000*1048576;
    int maxMemSize = 5000000 * 1024;
    ServletContext context = pageContext.getServletContext();
    String filePath = context.getInitParameter("file-upload");
@@ -15,7 +15,7 @@
    // Verify the content type
    String contentType = request.getContentType();
    
-   if (contentType!=null && (contentType.indexOf("multipart/form-data") >= 0)) {
+   if (contentType!=null && (contentType.contains("multipart/form-data"))) {
       DiskFileItemFactory factory = new DiskFileItemFactory();
       // maximum size that will be stored in memory
       factory.setSizeThreshold(maxMemSize);
@@ -32,38 +32,31 @@
       try { 
          List fileItems = upload.parseRequest(request);
 
-         Iterator i = fileItems.iterator();
-         
-         while ( i.hasNext () ) {
-            FileItem fi = (FileItem)i.next();
-            if ( !fi.isFormField () ) {
-               // Get the uploaded file parameters
-               String fieldName = fi.getFieldName();
-               String fileName = fi.getName();
-               boolean isInMemory = fi.isInMemory();
-               long sizeInBytes = fi.getSize();
-            
-			   String fixedFileName="";
-               if( fileName.lastIndexOf("\\") >= 0 ) {
-				   fixedFileName = filePath + 
-                  fileName.substring( fileName.lastIndexOf("\\"));
-                  file = new File(fixedFileName) ;
-               } else {
-				   fixedFileName = filePath + 
-                  fileName.substring(fileName.lastIndexOf("\\")+1);
-                  file = new File(fixedFileName) ;
-               }
-			   int a=2;
-			   while(file.exists()){
-					String ext = FilenameUtils.getExtension(fixedFileName);
-					String newname = FilenameUtils.removeExtension(fixedFileName)+"_"+a+"."+ext;
-					file = new File(newname);
-					a++;
-			   }
-               fi.write( file ) ;
-               out.println("'"+file.getName()+"'");
-            }
-         }
+		  for(Object fileItem : fileItems){
+			  FileItem fi = (FileItem) fileItem;
+			  if(!fi.isFormField()){
+				  // Get the uploaded file parameters
+//               String fieldName = fi.getFieldName();
+				  String fileName = fi.getName();
+//               boolean isInMemory = fi.isInMemory();
+//               long sizeInBytes = fi.getSize();
+
+				  String fixedFileName;
+				  fixedFileName = fileName.lastIndexOf("\\") >= 0 ? filePath+
+						  fileName.substring(fileName.lastIndexOf("\\")) : filePath+
+						  fileName.substring(fileName.lastIndexOf("\\")+1);
+				  file = new File(fixedFileName);
+				  int a = 2;
+				  while(file.exists()){
+					  String ext = FilenameUtils.getExtension(fixedFileName);
+					  String newname = FilenameUtils.removeExtension(fixedFileName)+"_"+a+'.'+ext;
+					  file = new File(newname);
+					  a++;
+				  }
+				  fi.write(file);
+				  out.println('\''+file.getName()+'\'');
+			  }
+		  }
       } catch(Exception ex) {
 		   System.out.println(ex);
       }

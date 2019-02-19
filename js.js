@@ -47,7 +47,7 @@ function progressHandler(event) {
 	_("loaded_n_total").innerHTML = "Uploaded " + event.loaded + " bytes of " + event.total;
 	const percent = (event.loaded / event.total) * 100;
 	_("progressBar").value = percent;
-	_("status").innerHTML = Math.round(percent) + "% uploaded...";
+	_("status").innerHTML = Math.round(percent) + "% uploaded... Please Wait";
 }
 
 function completeHandler(event) {
@@ -56,7 +56,7 @@ function completeHandler(event) {
 	newstat.setAttribute("class","status");
 	document.getElementById("upload_form").appendChild(newstat);
 	_("status"+idx).innerHTML = "Success uploaded "+event.target.responseText+"<br>";
-	// _("status").innerHTML = "";
+	_("status").innerHTML = "";
 	idx++;
 	if((idx+1)<=_("file1").files.length){
 		startUpload(_("file1").files[idx]);
