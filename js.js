@@ -6,9 +6,9 @@
 
 
 let ajax;
-let idx = 0;
+let idx = 1;
 
-function _(el) {
+function _(el){
 	return document.getElementById(el);
 }
 
@@ -16,18 +16,18 @@ function abort(event){
 	console.log("hi");
 	event.preventDefault();
 	_("file1").value = "";
-	if(ajax!==undefined) ajax.abort();
+	if(ajax !== undefined) ajax.abort();
 }
 
-function uploadFile() {
-	document.getElementById("file1").setAttribute("disabled","disabled");
-	if(document.querySelectorAll(".status")!==null && idx===0) {
+function uploadFile(){
+	document.getElementById("file1").setAttribute("disabled", "disabled");
+	if(document.querySelectorAll(".status") !== null && idx === 1){
 		let x = document.querySelectorAll(".status");
-		for (let i = 0; i < x.length; i++) {
+		for(let i = 0; i < x.length; i++){
 			x[i].innerHTML = "";
 		}
 	}
-	startUpload(_("file1").files[idx]);
+	startUpload(_("file1").files[0]);
 }
 
 function startUpload(file){
@@ -43,35 +43,34 @@ function startUpload(file){
 	ajax.send(formdata);
 }
 
-function progressHandler(event) {
+function progressHandler(event){
 	_("loaded_n_total").innerHTML = "Uploaded " + event.loaded + " bytes of " + event.total;
 	const percent = (event.loaded / event.total) * 100;
 	_("progressBar").value = percent;
 	_("status").innerHTML = Math.round(percent) + "% uploaded... Please Wait";
 }
 
-function completeHandler(event) {
+function completeHandler(event){
 	const newstat = document.createElement('h3');
-	newstat.setAttribute("id","status"+idx);
-	newstat.setAttribute("class","status");
+	newstat.setAttribute("id", "status" + idx);
+	newstat.setAttribute("class", "status");
 	document.getElementById("upload_form").appendChild(newstat);
-	_("status"+idx).innerHTML = "Success uploaded "+event.target.responseText+"<br>";
-	_("status").innerHTML = "";
-	idx++;
-	if((idx+1)<=_("file1").files.length){
-		startUpload(_("file1").files[idx]);
+	_("status" + idx).innerHTML = "Success uploaded " + event.target.responseText + "<br>";
+	if(idx < _("file1").files.length){
+		startUpload(_("file1").files[idx++]);
 	} else{
-		_("loaded_n_total").innerHTML = "";
+		_("status").innerHTML = "&nbsp;";
+		_("loaded_n_total").innerHTML = "&nbsp";
 		document.getElementById("file1").removeAttribute("disabled");
-		idx=0;
+		idx = 1;
 		_("file1").value = "";
 	}
 }
 
-function errorHandler() {
+function errorHandler(){
 	_("status").innerHTML = "Upload Failed";
 }
 
-function abortHandler() {
+function abortHandler(){
 	_("status").innerHTML = "Upload Aborted";
 }

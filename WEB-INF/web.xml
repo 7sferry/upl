@@ -12,7 +12,7 @@
    <description>Location to store failed file</description> 
    <param-name>failed</param-name> 
    <param-value>
-      b:\
+      b:\Failed\
    </param-value> 
 </context-param>
 

@@ -4,7 +4,10 @@
 <%@ page import = "org.apache.commons.fileupload.disk.*" %>
 <%@ page import = "org.apache.commons.fileupload.servlet.*" %>
 <%@ page import = "org.apache.commons.io.*" %>
-
+<%--~~~~~~~~~~~~~~~~~~~~
+  ~ Created by MR Ferry™
+  ~  February 2019     ~
+  ~~~~~~~~~~~~~~~~~~~~--%>
 <%
    File file ;
    int maxFileSize = 5000000*1048576;
@@ -30,14 +33,13 @@
       upload.setSizeMax( maxFileSize );
       
       try { 
-         List fileItems = upload.parseRequest(request);
+         List<FileItem> fileItems = upload.parseRequest(request);
 
-		  for(Object fileItem : fileItems){
-			  FileItem fi = (FileItem) fileItem;
-			  if(!fi.isFormField()){
+		  for(FileItem fileItem : fileItems){
+			  if(!fileItem.isFormField()){
 				  // Get the uploaded file parameters
 //               String fieldName = fi.getFieldName();
-				  String fileName = fi.getName();
+				  String fileName = fileItem.getName();
 //               boolean isInMemory = fi.isInMemory();
 //               long sizeInBytes = fi.getSize();
 
@@ -53,7 +55,7 @@
 					  file = new File(newname);
 					  a++;
 				  }
-				  fi.write(file);
+				  fileItem.write(file);
 				  out.println('\''+file.getName()+'\'');
 			  }
 		  }
