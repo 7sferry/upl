@@ -1,12 +1,11 @@
 /************************
- * Created by MR Ferry™ *
- *  February 2019       *
+ * Made by [MR Ferry™]  *
+ *  on February 2019    *
  ************************/
-
-
 
 let ajax;
 let idx = 1;
+let completed;
 
 function _(el){
 	return document.getElementById(el);
@@ -20,17 +19,19 @@ function abort(event){
 }
 
 function uploadFile(){
+	completed = 0;
 	document.getElementById("file1").setAttribute("disabled", "disabled");
 	if(document.querySelectorAll(".status") !== null && idx === 1){
 		let x = document.querySelectorAll(".status");
 		for(let i = 0; i < x.length; i++){
-			x[i].innerHTML = "";
+			x[i].remove();
 		}
 	}
 	startUpload(_("file1").files[0]);
 }
 
 function startUpload(file){
+	_("total").innerHTML = "uploaded " + completed + '/' + _("file1").files.length;
 	_("progressBar").value = 0;
 	const formdata = new FormData();
 	formdata.append("file1", file);
@@ -39,7 +40,7 @@ function startUpload(file){
 	ajax.addEventListener("load", completeHandler, false);
 	ajax.addEventListener("error", errorHandler, false);
 	ajax.addEventListener("abort", abortHandler, false);
-	ajax.open("POST", "upload.jsp");
+	ajax.open("POST", "uploading");
 	ajax.send(formdata);
 }
 
@@ -51,6 +52,7 @@ function progressHandler(event){
 }
 
 function completeHandler(event){
+	_("total").innerHTML = "uploaded " + ++completed + '/' + _("file1").files.length;
 	const newstat = document.createElement('h3');
 	newstat.setAttribute("id", "status" + idx);
 	newstat.setAttribute("class", "status");
