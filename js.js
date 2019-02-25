@@ -40,7 +40,7 @@ function startUpload(file){
 	ajax.addEventListener("load", completeHandler, false);
 	ajax.addEventListener("error", errorHandler, false);
 	ajax.addEventListener("abort", abortHandler, false);
-	ajax.open("POST", "uploading");
+	ajax.open("POST", "upload.jsp");
 	ajax.send(formdata);
 }
 
