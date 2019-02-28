@@ -21,10 +21,10 @@ function abort(event){
 function uploadFile(){
 	completed = 0;
 	document.getElementById("file1").setAttribute("disabled", "disabled");
-	if(document.querySelectorAll(".status") !== null && idx === 1){
-		let x = document.querySelectorAll(".status");
-		for(let i = 0; i < x.length; i++){
-			x[i].remove();
+	let status = document.querySelectorAll(".status");
+	if(status.length !== 0 && idx === 1){
+		for(const node of Array.from(status)){
+			node.remove();
 		}
 	}
 	startUpload(_("file1").files[0]);
